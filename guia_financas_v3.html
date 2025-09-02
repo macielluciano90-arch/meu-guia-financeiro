@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo de Finanças</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC; /* Light Blue Gray */
+            color: #1F2937;
+        }
+        .section-card {
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            border: 1px solid #E5E7EB;
+        }
+        .btn-primary {
+            background-color: #16A34A; /* Emerald Green */
+            color: white;
+            transition: all 0.3s ease;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgb(22 163 74 / 0.1), 0 2px 4px -2px rgb(22 163 74 / 0.06);
+        }
+        .btn-primary:hover {
+            background-color: #15803D; /* Darker Emerald */
+            transform: translateY(-2px);
+        }
+        .btn-quick-add {
+            background-color: #F3F4F6;
+            color: #4B5563;
+            border-radius: 9999px; /* Rounded pill shape */
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .btn-quick-add:hover {
+            background-color: #E5E7EB;
+            transform: scale(1.05);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #16A34A;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .range-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #16A34A;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .balance-positive {
+            color: #16A34A;
+        }
+        .balance-negative {
+            color: #EF4444; /* Red */
+        }
+        .balance-neutral {
+            color: #3B82F6; /* Blue */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Intro -->
+    <header class="bg-white">
+        <div class="max-w-5xl mx-auto text-center py-16 px-6 sm:py-24 lg:px-8">
+            <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+                <span class="block">Seu Dinheiro Não Mente,</span>
+                <span class="block text-[#16A34A]">e a Liberdade é Real.</span>
+            </h1>
+            <p class="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-gray-500">Um guia prático e interativo para você que quer prosperar, mesmo com pouco. Chega de ver o dinheiro desaparecer!</p>
+            <a href="#section-leaks" class="mt-8 inline-block btn-primary">Começar a Transformação</a>
+        </div>
+    </header>
+
+    <main class="space-y-12 md:space-y-20 py-12 px-4 md:px-8">
+        
+        <!-- Section 1: The Leaks -->
+        <section id="section-leaks" class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Capítulo 1: Encontre os Vazamentos 💧</h2>
+                <p class="mt-4 text-lg text-gray-600">O primeiro passo é identificar os "gastos invisíveis". Aqueles pequenos valores que, somados, levam sua grana embora. Clique nos gastos que você tem e veja a mágica (ou o susto) acontecer.</p>
+            </div>
+            
+            <div class="section-card p-6 md:p-8">
+                <div class="prose max-w-none text-gray-700">
+                    <p>Você já se perguntou para onde vai o seu dinheiro? A resposta mais comum é: "não sei, ele simplesmente some". A verdade é que o dinheiro não desaparece. Ele é drenado por pequenos vazamentos que, por serem invisíveis, se tornam gigantescos no final do mês.</p>
+                    <p>Imagine a seguinte situação: você é o Lucas. Você ganha seu salário e, como a maioria, tem gastos fixos (aluguel, contas). Mas os verdadeiros vilões são os gastos diários. Um café na rua (R$ 8), um lanche (R$ 15), um app de transporte porque estava com preguiça (R$ 20). No fim do dia, foram R$ 43 em gastos que pareciam insignificantes. Em uma semana, já são mais de R$ 300. Em um mês, ultrapassa R$ 1.200!</p>
+                    <p>Esses são os chamados **gastos invisíveis**: pequenas despesas que você ignora, mas que, somadas, formam uma quantia enorme. O delivery de fim de semana, a assinatura que você esqueceu de cancelar, o jogo que você comprou por impulso... Eles são os buracos por onde a sua prosperidade escorre. Agora, vamos descobrir quanto desses vazamentos existem na sua vida.</p>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold text-gray-800">Seus Vazamentos Financeiros</h3>
+                    <p class="mt-2 text-gray-600">Clique nos itens que você costuma gastar e veja o impacto mensal na sua vida.</p>
+                </div>
+                <div id="leaks-grid" class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <!-- Cards will be injected by JS -->
+                </div>
+                <div class="mt-8 text-center bg-gray-100 rounded-lg p-6">
+                    <p class="text-lg font-medium text-gray-800">Gasto mensal estimado com esses itens:</p>
+                    <p id="leaks-total" class="text-4xl font-extrabold text-[#16A34A] mt-2">R$ 0,00</p>
+                    <p id="leaks-feedback" class="mt-2 text-sm text-gray-600">Clique em um item para começar.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 2: The Power of Saving -->
+        <section id="section-saving" class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Capítulo 2: O Poder dos Poucos 🚀</h2>
+                <p class="mt-4 text-lg text-gray-600">Não é sobre o quanto você ganha, mas o quanto você guarda. Veja como a consistência de pequenos valores pode construir uma fortuna no longo prazo.</p>
+            </div>
+
+            <div class="section-card p-6 md:p-8">
+                <div class="prose max-w-none text-gray-700">
+                    <p>Muitas pessoas pensam que economizar só é possível para quem tem um salário alto. Isso não é verdade. A real mágica das finanças pessoais está na **consistência**, não na quantia inicial. O poder de juntar dinheiro diariamente, mesmo que sejam R$ 5 ou R$ 10, é algo que poucas pessoas realmente entendem.</p>
+                    <p>Imagine a Maria, que decide guardar R$ 10 por dia. No primeiro mês, ela terá cerca de R$ 300. No fim do ano, já são mais de R$ 3.600. Isso é o suficiente para uma reserva de emergência ou para dar a entrada em algo que ela sempre quis. O mais incrível é que, se ela continuar com esse hábito, esses R$ 10 se tornam uma bola de neve. O dinheiro começa a "trabalhar" para ela, gerando um retorno sobre o que foi guardado, um conceito que o tempo potencializa.</p>
+                    <p>A poupança é o caminho para a liberdade. Ela permite que você diga "não" a um emprego que não te valoriza, pague à vista por algo que te liberta de dívidas e, acima de tudo, te dá paz de espírito. Não subestime o poder de um pequeno hábito. Use a calculadora abaixo para visualizar o futuro que você pode construir.</p>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold text-gray-800">Simulador de Poupança</h3>
+                    <p class="mt-2 text-gray-600">Arraste a barra para definir a sua economia diária e veja o seu potencial financeiro ao longo do tempo.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-4">
+                    <div>
+                        <label for="daily-saving" class="block text-lg font-semibold text-gray-800">Economia diária:</label>
+                        <span id="daily-saving-value" class="text-2xl font-bold text-[#16A34A]">R$ 10,00</span>
+                        <input id="daily-saving" type="range" min="1" max="50" value="10" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-slider mt-2">
+                        
+                        <div class="mt-6">
+                            <span class="text-lg font-semibold text-gray-800">Período:</span>
+                            <div id="saving-period-buttons" class="flex flex-wrap gap-2 mt-2">
+                                <button class="period-btn bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium" data-years="1">1 Ano</button>
+                                <button class="period-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium" data-years="5">5 Anos</button>
+                                <button class="period-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium" data-years="10">10 Anos</button>
+                                <button class="period-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium" data-years="20">20 Anos</button>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 text-center bg-green-50 rounded-lg p-6">
+                            <p class="text-lg font-medium text-green-800">Valor total que você terá guardado:</p>
+                            <p id="saving-total" class="text-4xl font-extrabold text-[#16A34A] mt-2">R$ 3.650,00</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="savings-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: 7-Day Plan -->
+        <section id="section-plan" class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Capítulo 3: Seu Plano de 7 Dias 🗓️</h2>
+                <p class="mt-4 text-lg text-gray-600">A teoria é boa, mas a prática transforma. Siga este checklist por uma semana para criar o hábito de controlar suas finanças.</p>
+            </div>
+            <div class="section-card p-6 md:p-8">
+                <div class="prose max-w-none text-gray-700">
+                    <p>Agora é a sua vez. Ler sobre educação financeira é o primeiro passo, mas agir é o que realmente muda a sua vida. Este plano de 7 dias foi desenhado para ser uma introdução prática e leve, com metas pequenas e alcançáveis que te ajudarão a criar os primeiros hábitos de prosperidade.</p>
+                    <p>O foco não é a perfeição, mas a consistência. Cada pequena tarefa concluída é uma vitória. Ao final da semana, você não só terá uma nova perspectiva sobre suas finanças, mas também a motivação para continuar. Não deixe a preguiça vencer; o seu futuro depende das escolhas que você faz hoje.</p>
+                    <p>Marque cada dia como concluído e veja seu progresso em tempo real. Você está a apenas 7 dias de começar a mudar sua vida financeira.</p>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold text-gray-800">Seu Desafio de 7 Dias</h3>
+                    <p class="mt-2 text-gray-600">Marque cada tarefa conforme você a completa para acompanhar seu progresso.</p>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4 mt-4 mb-6">
+                    <div id="progress-bar" class="bg-[#16A34A] h-4 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div id="checklist" class="space-y-4">
+                    <!-- Checklist items injected by JS -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: Conclusion & Tools -->
+        <section id="section-tools" class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">O Futuro Está em Suas Mãos 🌟</h2>
+                <p class="mt-4 text-lg text-gray-600">Se você não mudar hoje, quando vai mudar? Pequenos hábitos criam liberdade. Use as ferramentas abaixo para continuar sua jornada.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="section-card p-8 col-span-1 md:col-span-2">
+                    <h3 class="text-2xl font-bold text-gray-900">Planilha de Gastos e Receitas</h3>
+                    <p class="mt-2 text-gray-600">Use esta mini planilha para registrar suas movimentações financeiras. Adicione um item, defina se é uma receita ou despesa e acompanhe seu saldo. O registro de gastos diários nunca foi tão fácil!</p>
+                    
+                    <div class="mt-6 flex flex-wrap gap-2">
+                        <button class="btn-quick-add" data-description="Café" data-value="8.00">
+                            <span class="inline-block align-middle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-1 align-middle">
+                                    <path d="M17 6h3v14c0 .5-.5 1-1 1h-8a1 1 0 0 1-1-1v-4h-3a3 3 0 0 1-3-3V3h12a2 2 0 0 1 2 2v1Z" />
+                                    <path d="M11 6h.01" />
+                                </svg>
+                            </span>Café
+                        </button>
+                        <button class="btn-quick-add" data-description="Lanche" data-value="15.00">
+                            <span class="inline-block align-middle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-1 align-middle">
+                                    <path d="M17 18a2 2 0 0 0 2-2V7.4a2 2 0 0 0-4-.4V10h-2V7a2 2 0 0 0-4-.4V10H6V7.4a2 2 0 0 0-4-.4V16a2 2 0 0 0 2 2h3.5a2 2 0 0 1 0 4H10" />
+                                </svg>
+                            </span>Lanche
+                        </button>
+                        <button class="btn-quick-add" data-description="Transporte" data-value="20.00">
+                            <span class="inline-block align-middle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-1 align-middle">
+                                    <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L14 9" />
+                                    <path d="M6.8 17.8l-1.6 1.6a2 2 0 0 1-2.8 0l-.8-.8a2 2 0 0 1 0-2.8l1.6-1.6" />
+                                    <path d="M15 14.5c.9 1.5 2.1 2.5 3.5 3" />
+                                    <path d="M9.8 1.8l-1.6 1.6a2 2 0 0 1-2.8 0l-.8-.8a2 2 0 0 1 0-2.8l1.6-1.6" />
+                                    <path d="M12 9.5c1.5.9 2.5 2.1 3 3.5" />
+                                    <path d="m14 6-3 3" />
+                                    <path d="M22 10.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                </svg>
+                            </span>Transporte
+                        </button>
+                    </div>
+
+                    <div class="mt-6 space-y-4">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="text" id="entry-description" placeholder="Descrição (ex: salário, aluguel)" class="flex-grow p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <input type="number" id="entry-value" placeholder="Valor" class="flex-grow p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <select id="entry-type" class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <option value="expense">Despesa</option>
+                                <option value="income">Receita</option>
+                            </select>
+                            <button id="add-entry-btn" class="btn-primary w-full sm:w-auto">Adicionar</button>
+                        </div>
+                        <div class="mt-4 overflow-x-auto">
+                            <table class="w-full text-left table-auto border-collapse">
+                                <thead>
+                                    <tr class="bg-gray-100 text-gray-600">
+                                        <th class="px-4 py-2 rounded-tl-lg">Descrição</th>
+                                        <th class="px-4 py-2">Tipo</th>
+                                        <th class="px-4 py-2 text-right">Valor</th>
+                                        <th class="px-4 py-2 text-center rounded-tr-lg">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="entries-table-body" class="divide-y divide-gray-200">
+                                    <!-- Rows will be injected by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="chart-container">
+                            <canvas id="balance-chart"></canvas>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <p class="text-lg font-medium text-gray-800">Saldo Atual:</p>
+                            <p id="balance-total" class="text-4xl font-extrabold text-[#16A34A] mt-2">R$ 0,00</p>
+                        </div>
+                    </div>
+
+                    <p class="mt-4 text-sm text-gray-500 text-center">
+                        **Seu ID de Usuário:** <span id="user-id-display" class="font-mono text-gray-700">Carregando...</span>
+                    </p>
+                </div>
+
+                <div class="section-card p-8">
+                    <h3 class="text-2xl font-bold text-gray-900">Apps Recomendados</h3>
+                    <ul class="mt-4 space-y-6">
+                        <li>
+                            <h4 class="font-bold text-lg text-gray-800">Mobills</h4>
+                            <p class="mt-1 text-gray-600">Ideal para quem busca um controle completo e visual. O Mobills permite categorizar gastos, criar orçamentos detalhados e visualizar o desempenho financeiro através de relatórios e gráficos.
+                            <br><br><b>Exemplo de uso:</b> Crie uma categoria para "Delivery" e um orçamento de R$ 200 para o mês. O app te avisará quando estiver perto do limite, ajudando a controlar o impulso.</p>
+                        </li>
+                        <li>
+                            <h4 class="font-bold text-lg text-gray-800">Organizze</h4>
+                            <p class="mt-1 text-gray-600">Perfeito para quem valoriza a simplicidade e a rapidez no registro. Com uma interface limpa, ele foca no essencial: anotar gastos e receitas de forma prática, sem complexidade.
+                            <br><br><b>Exemplo de uso:</b> Anote o lanche do dia a dia em segundos. A simplicidade do app encoraja a consistência, um hábito fundamental para o sucesso financeiro.</p>
+                        </li>
+                        <li>
+                            <h4 class="font-bold text-lg text-gray-800">Apps de Bancos Digitais (Caixinhas/Cofrinhos)</h4>
+                            <p class="mt-1 text-gray-600">Aproveite as funcionalidades de "caixinhas" ou "cofrinhos" para separar dinheiro com objetivos específicos. É uma forma de organizar o dinheiro por metas, tornando o processo de guardar mais motivador.
+                            <br><br><b>Exemplo de uso:</b> Crie uma caixinha chamada "Intercâmbio" e transfira R$ 50 para ela toda semana. O dinheiro fica separado do seu saldo principal, evitando que você o gaste sem querer.</p>
+                        </li>
+                        <li>
+                            <h4 class="font-bold text-lg text-gray-800">Minhas Economias</h4>
+                            <p class="mt-1 text-gray-600">Focado em planejamento e orçamento, este app é ideal para quem quer construir um plano financeiro sólido. Ele te ajuda a visualizar onde o seu dinheiro está indo e como ele pode ser usado para atingir metas maiores.
+                            <br><br><b>Exemplo de uso:</b> Defina uma meta de "Reserva de Emergência" e o app te mostrará o quanto você precisa economizar por mês para alcançá-la no prazo que você definiu.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-50 mt-12">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p>&copy; 2025 Guia de Finanças para Jovens. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+
+<script type="module">
+    // Firebase Imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, getDocs, orderBy, deleteField, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Firebase Initialization ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        let userId = null;
+        let entriesCollectionRef;
+        let checklistCollectionRef;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                document.getElementById('user-id-display').textContent = userId;
+                entriesCollectionRef = collection(db, `/artifacts/${appId}/users/${userId}/entries`);
+                checklistCollectionRef = collection(db, `/artifacts/${appId}/users/${userId}/checklist`);
+                loadEntries();
+                loadChecklist();
+            } else {
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Erro ao autenticar no Firebase:", error);
+                }
+            }
+        });
+
+        // --- Section 1: The Leaks ---
+        const leaksData = [
+            { title: 'Café na rua', value: 8, icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M10 2a2 2 0 0 1 2 2v2a2 2 0 1 1-4 0V4a2 2 0 0 1 2-2z"/><path d="M15 6h.01"/><path d="M19 6h.01"/><path d="M12 6h.01"/><path d="M17 10h.01"/><path d="M7 10h.01"/><path d="M15 10h.01"/><path d="M12 10h.01"/><path d="M17 14h.01"/><path d="M7 14h.01"/><path d="M15 14h.01"/><path d="M12 14h.01"/><path d="M17 18h.01"/><path d="M7 18h.01"/><path d="M15 18h.01"/><path d="M12 18h.01"/><path d="M12 22h.01"/></svg>' },
+            { title: 'Delivery', value: 50, icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M17 21a2 2 0 0 1-2-2v-4a2 2 0 0 1-2-2H9a2 2 0 0 1-2 2v4a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2h2V7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"/><path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 1 1-4 0V4a2 2 0 0 1 2-2z"/></svg>' },
+            { title: 'Assinaturas', value: 35, icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M12 3v18"/></svg>' },
+            { title: 'App de Transporte', value: 20, icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l3 3"/></svg>' },
+            { title: 'Jogos/Apps', value: 25, icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 12h.01"/></svg>' },
+            { title: 'Compras por Impulso', value: 75, icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M18 6h-2c-1.1 0-2 .9-2 2v3h4V8c0-1.1-.9-2-2-2z"/><path d="M10 6h-2c-1.1 0-2 .9-2 2v3h4V8c0-1.1-.9-2-2-2z"/><path d="M18 11h-2c-1.1 0-2 .9-2 2v3h4v-3c0-1.1-.9-2-2-2z"/><path d="M10 11h-2c-1.1 0-2 .9-2 2v3h4v-3c0-1.1-.9-2-2-2z"/><path d="M14 6h-4c-1.1 0-2 .9-2 2v3h4V8c0-1.1-.9-2-2-2z"/><path d="M14 11h-4c-1.1 0-2 .9-2 2v3h4v-3c0-1.1-.9-2-2-2z"/><path d="M14 16h-4c-1.1 0-2 .9-2 2v3h4v-3c0-1.1-.9-2-2-2z"/></svg>' },
+            { title: 'Snacks/Doces', value: 10, icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12z"/></svg>' },
+            { title: 'Sair à noite', value: 120, icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block"><path d="M18 20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M12 6h.01"/><path d="M16 6h.01"/><path d="M8 6h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/><path d="M8 18h.01"/><path d="M12 22h.01"/><path d="M16 22h.01"/><path d="M8 22h.01"/></svg>' },
+        ];
+        
+        const leaksGrid = document.getElementById('leaks-grid');
+        const leaksTotalEl = document.getElementById('leaks-total');
+        const leaksFeedbackEl = document.getElementById('leaks-feedback');
+        let selectedLeaks = [];
+
+        leaksData.forEach(leak => {
+            const card = document.createElement('div');
+            card.className = 'section-card p-4 text-center cursor-pointer transition-all duration-200 hover:scale-105 hover:bg-green-50 hover:border-green-300';
+            card.dataset.title = leak.title;
+            card.dataset.value = leak.value;
+            card.innerHTML = `
+                <div class="text-xl text-gray-700">${leak.icon}</div>
+                <p class="mt-2 font-semibold text-gray-800">${leak.title}</p>
+                <p class="text-sm text-gray-500">R$ ${leak.value.toFixed(2)} /dia</p>
+            `;
+            leaksGrid.appendChild(card);
+        });
+
+        leaksGrid.addEventListener('click', (e) => {
+            const card = e.target.closest('.section-card');
+            if (!card) return;
+
+            const title = card.dataset.title;
+            const value = parseFloat(card.dataset.value);
+
+            if (selectedLeaks.includes(title)) {
+                selectedLeaks = selectedLeaks.filter(item => item !== title);
+                card.classList.remove('bg-green-50', 'border-green-300');
+            } else {
+                selectedLeaks.push(title);
+                card.classList.add('bg-green-50', 'border-green-300');
+            }
+            updateLeaksTotal();
+        });
+
+        const updateLeaksTotal = () => {
+            let totalDaily = 0;
+            leaksData.forEach(leak => {
+                if (selectedLeaks.includes(leak.title)) {
+                    totalDaily += leak.value;
+                }
+            });
+            const totalMonthly = totalDaily * 30; // Estimativa de 30 dias por mês
+            leaksTotalEl.textContent = totalMonthly.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+            if (totalMonthly > 0) {
+                leaksFeedbackEl.textContent = `Atenção! Você está gastando R$ ${totalMonthly.toFixed(2)} por mês com esses pequenos hábitos.`;
+            } else {
+                leaksFeedbackEl.textContent = 'Clique em um item para começar.';
+            }
+        };
+
+        // --- Section 2: Saving Simulator ---
+        const dailySavingSlider = document.getElementById('daily-saving');
+        const dailySavingValueEl = document.getElementById('daily-saving-value');
+        const savingPeriodButtons = document.querySelectorAll('.period-btn');
+        const savingTotalEl = document.getElementById('saving-total');
+        const savingsChartCanvas = document.getElementById('savings-chart').getContext('2d');
+        let savingsChart;
+
+        const updateSavingsChart = (dailySaving, years) => {
+            const totalMonths = years * 12;
+            let labels = [];
+            let data = [];
+            let currentTotal = 0;
+
+            // Simple approximation, without compound interest.
+            for (let i = 1; i <= totalMonths; i++) {
+                currentTotal += dailySaving * 30;
+                labels.push(`Mês ${i}`);
+                data.push(currentTotal);
+            }
+
+            if (savingsChart) {
+                savingsChart.destroy();
+            }
+
+            savingsChart = new Chart(savingsChartCanvas, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sua Poupança',
+                        data: data,
+                        borderColor: '#16A34A',
+                        backgroundColor: 'rgba(22, 163, 74, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                            }
+                        }
+                    }
+                }
+            });
+
+            savingTotalEl.textContent = currentTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        };
+
+        dailySavingSlider.addEventListener('input', () => {
+            const dailyValue = parseFloat(dailySavingSlider.value);
+            dailySavingValueEl.textContent = dailyValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            const activePeriodBtn = document.querySelector('.period-btn.bg-green-600');
+            const years = parseInt(activePeriodBtn.dataset.years);
+            updateSavingsChart(dailyValue, years);
+        });
+
+        savingPeriodButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                savingPeriodButtons.forEach(btn => {
+                    btn.classList.remove('bg-green-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                e.target.classList.remove('bg-gray-200', 'text-gray-700');
+                e.target.classList.add('bg-green-600', 'text-white');
+                const dailyValue = parseFloat(dailySavingSlider.value);
+                const years = parseInt(e.target.dataset.years);
+                updateSavingsChart(dailyValue, years);
+            });
+        });
+
+        // Initial chart render
+        updateSavingsChart(10, 1);
+
+        // --- Section 3: 7-Day Plan ---
+        const planItems = [
+            'Dia 1: Anote todas as suas despesas de hoje, não importa o quão pequenas.',
+            'Dia 2: Revise as despesas de ontem e identifique um gasto que poderia ter sido evitado.',
+            'Dia 3: Crie um orçamento simples para os próximos 7 dias.',
+            'Dia 4: Mova R$ 5,00 para uma conta de poupança separada.',
+            'Dia 5: Pesquise um vídeo sobre um app de finanças ou um novo método de poupança.',
+            'Dia 6: Verifique se você cumpriu o orçamento que criou no Dia 3.',
+            'Dia 7: Recompense-se de forma consciente. Você merece, mas sem estourar o orçamento!'
+        ];
+
+        const checklistEl = document.getElementById('checklist');
+        const progressBarEl = document.getElementById('progress-bar');
+        
+        const renderChecklist = (checkedItems) => {
+            checklistEl.innerHTML = '';
+            planItems.forEach((item, index) => {
+                const isChecked = checkedItems.includes(item);
+                const listItem = document.createElement('div');
+                listItem.className = `flex items-center p-4 rounded-lg transition-colors duration-200 ${isChecked ? 'bg-green-50' : 'bg-gray-50'}`;
+                listItem.innerHTML = `
+                    <input type="checkbox" id="item-${index}" class="form-checkbox h-5 w-5 text-green-600 rounded" ${isChecked ? 'checked' : ''}>
+                    <label for="item-${index}" class="ml-3 text-gray-700 flex-grow cursor-pointer">
+                        <span class="font-bold">Dia ${index + 1}:</span> ${item}
+                    </label>
+                `;
+                listItem.querySelector('input').addEventListener('change', async (e) => {
+                    if (!userId) {
+                        console.error("Usuário não autenticado. Não é possível atualizar a checklist.");
+                        return;
+                    }
+                    const checkedState = e.target.checked;
+                    try {
+                        const docRef = doc(checklistCollectionRef, 'progress');
+                        const docSnap = await getDoc(docRef);
+                        const data = docSnap.exists() ? docSnap.data().items : [];
+                        if (checkedState) {
+                            if (!data.includes(item)) {
+                                await setDoc(docRef, { items: [...data, item] });
+                            }
+                        } else {
+                            await setDoc(docRef, { items: data.filter(i => i !== item) });
+                        }
+                    } catch (e) {
+                        console.error("Erro ao atualizar a checklist: ", e);
+                    }
+                });
+                checklistEl.appendChild(listItem);
+            });
+        };
+
+        const loadChecklist = () => {
+            if (!userId) return;
+            onSnapshot(doc(checklistCollectionRef, 'progress'), (docSnap) => {
+                const checkedItems = docSnap.exists() ? docSnap.data().items : [];
+                renderChecklist(checkedItems);
+                updateProgressBar(checkedItems.length);
+            }, (error) => {
+                console.error("Erro ao obter a checklist: ", error);
+            });
+        };
+
+        const updateProgressBar = (completedTasks) => {
+            const progress = (completedTasks / planItems.length) * 100;
+            progressBarEl.style.width = `${progress}%`;
+        };
+
+        // --- Section 4: Spreadsheet & Chart Logic ---
+        const addEntryBtn = document.getElementById('add-entry-btn');
+        const entryDescriptionInput = document.getElementById('entry-description');
+        const entryValueInput = document.getElementById('entry-value');
+        const entryTypeSelect = document.getElementById('entry-type');
+        const entriesTableBody = document.getElementById('entries-table-body');
+        const balanceTotalEl = document.getElementById('balance-total');
+        const balanceChartCanvas = document.getElementById('balance-chart').getContext('2d');
+        let balanceChart;
+
+        const updateBalanceChart = (income, expense) => {
+            if (balanceChart) {
+                balanceChart.destroy();
+            }
+            balanceChart = new Chart(balanceChartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: ['Receitas', 'Despesas'],
+                    datasets: [{
+                        label: 'Balanço',
+                        data: [income, expense],
+                        backgroundColor: ['#10B981', '#EF4444'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { 
+                            beginAtZero: true, 
+                            ticks: { 
+                                callback: value => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                            } 
+                        }
+                    }
+                }
+            });
+        };
+
+        const loadEntries = () => {
+            if (!userId) {
+                console.error("ID do usuário não definido. Não é possível carregar dados.");
+                return;
+            }
+            
+            onSnapshot(entriesCollectionRef, (querySnapshot) => {
+                let currentBalance = 0;
+                let totalIncome = 0;
+                let totalExpense = 0;
+                const entries = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    entries.push({ id: doc.id, ...data });
+                });
+
+                // Ordena os itens localmente por timestamp, se disponível
+                entries.sort((a, b) => (a.timestamp ? a.timestamp.toDate() : 0) - (b.timestamp ? b.timestamp.toDate() : 0));
+                
+                entriesTableBody.innerHTML = '';
+                
+                entries.forEach(entry => {
+                    addEntryRowToTable(entry.id, entry.description, entry.value, entry.type);
+                    if (entry.type === 'income') {
+                        currentBalance += entry.value;
+                        totalIncome += entry.value;
+                    } else {
+                        currentBalance -= entry.value;
+                        totalExpense += entry.value;
+                    }
+                });
+                
+                updateBalanceUI(currentBalance);
+                updateBalanceChart(totalIncome, totalExpense);
+            }, (error) => {
+                console.error("Erro ao obter dados: ", error);
+            });
+        };
+
+        const updateBalanceUI = (currentBalance) => {
+            balanceTotalEl.textContent = currentBalance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
+            balanceTotalEl.classList.remove('balance-positive', 'balance-negative', 'balance-neutral');
+            if (currentBalance > 0) {
+                balanceTotalEl.classList.add('balance-positive');
+            } else if (currentBalance < 0) {
+                balanceTotalEl.classList.add('balance-negative');
+            } else {
+                balanceTotalEl.classList.add('balance-neutral');
+            }
+        };
+
+        const addEntryRowToTable = (docId, description, value, type) => {
+            const row = document.createElement('tr');
+            row.dataset.docId = docId;
+
+            const formattedValue = value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            
+            row.innerHTML = `
+                <td class="px-4 py-2">${description}</td>
+                <td class="px-4 py-2">${type === 'income' ? 'Receita' : 'Despesa'}</td>
+                <td class="px-4 py-2 text-right ${type === 'income' ? 'text-green-600' : 'text-red-600'}">${formattedValue}</td>
+                <td class="px-4 py-2 text-center">
+                    <button class="text-gray-400 hover:text-red-600 delete-btn transition-transform hover:scale-110">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block">
+                            <path d="M3 6h18M19 6v14c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V6m3 0V4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2M10 11v6M14 11v6"/>
+                        </svg>
+                    </button>
+                </td>
+            `;
+
+            const deleteButton = row.querySelector('.delete-btn');
+            deleteButton.addEventListener('click', async () => {
+                try {
+                    const docRef = doc(db, `/artifacts/${appId}/users/${userId}/entries`, docId);
+                    await deleteDoc(docRef);
+                } catch (error) {
+                    console.error("Erro ao remover o item: ", error);
+                }
+            });
+            
+            entriesTableBody.appendChild(row);
+        };
+        
+        const addEntry = async (description, value, type) => {
+            if (!userId) {
+                console.error("Usuário não autenticado. Não é possível adicionar entrada.");
+                return;
+            }
+
+            if (description === '' || isNaN(value) || value <= 0) {
+                console.warn('Por favor, preencha a descrição e o valor corretamente.');
+                return;
+            }
+            
+            try {
+                await addDoc(entriesCollectionRef, {
+                    description: description,
+                    value: value,
+                    type: type,
+                    timestamp: serverTimestamp()
+                });
+                
+                entryDescriptionInput.value = '';
+                entryValueInput.value = '';
+                entryDescriptionInput.focus();
+
+            } catch (e) {
+                console.error("Erro ao adicionar documento: ", e);
+            }
+        };
+
+        addEntryBtn.addEventListener('click', () => {
+            const description = entryDescriptionInput.value.trim();
+            const value = parseFloat(entryValueInput.value);
+            const type = entryTypeSelect.value;
+            addEntry(description, value, type);
+        });
+
+        const quickAddBtns = document.querySelectorAll('.btn-quick-add');
+        quickAddBtns.forEach(button => {
+            button.addEventListener('click', () => {
+                const description = button.dataset.description;
+                const value = parseFloat(button.dataset.value);
+                addEntry(description, value, 'expense');
+            });
+        });
+    });
+</script>
+</body>
+</html>
